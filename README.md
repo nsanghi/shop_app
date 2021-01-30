@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a WIP code along for a udemy flutter course that I am using to lean about Flutter.
 
 A few resources to get you started if this is your first Flutter project:
 
