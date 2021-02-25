@@ -61,6 +61,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       }
     }
     _isInit = false;
+    super.didChangeDependencies();
   }
 
   void _updateImageUrl() {
