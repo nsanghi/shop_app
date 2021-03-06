@@ -55,7 +55,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       if (productId != null) {
         _editedProduct = Provider.of<Products>(context).findById(productId);
         _initValues['title'] = _editedProduct.title;
-        _initValues['description'] = _editedProduct.title;
+        _initValues['description'] = _editedProduct.description;
         _initValues['price'] = _editedProduct.price.toString();
         _imageUrlController.text = _editedProduct.imageUrl;
       }
@@ -84,7 +84,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       if (_editedProduct.id == null) {
         await productsData.addProduct(_editedProduct);
       } else {
-        productsData.updateProduct(_editedProduct);
+        await productsData.updateProduct(_editedProduct);
       }
     } catch (error) {
       await showDialog<Null>(
@@ -102,12 +102,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
           ],
         ),
       );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override

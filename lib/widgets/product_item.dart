@@ -4,12 +4,15 @@ import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
 import '../providers/cart.dart';
+import '../providers/auth.dart';
 
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
     var product = Provider.of<Product>(context);
-    var cart = Provider.of<Cart>(context);
+    var cart = Provider.of<Cart>(context, listen: false);
+    var auth = Provider.of<Auth>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GestureDetector(
@@ -28,7 +31,15 @@ class ProductItem extends StatelessWidget {
               icon: Icon(product.isFavorite
                   ? Icons.favorite
                   : Icons.favorite_border_outlined),
-              onPressed: product.toggleFavorite,
+              onPressed: () async {
+                try {
+                  await product.toggleFavorite(auth.token, auth.userId);
+                } catch (error) {
+                  scaffold.showSnackBar(SnackBar(
+                    content: Text("Favorite action failed!"),
+                  ));
+                }
+              },
               color: Theme.of(context).accentColor,
             ),
             title: Text(
